@@ -1,44 +1,46 @@
 name = "tbb"
 
-version = "2017.U6"
+version = "2020.3"
 
-authors = [
-    "Intel"
-]
-
-description = \
-    """
+description = """
     Threading Building Blocks is a C++ template library developed by Intel for parallel programming on multi-core
     processors. Using TBB, a computation is broken down into tasks that can run in parallel. The library manages
     and schedules threads to execute these tasks.
     """
 
+authors = [
+    "Intel",
+]
+
 requires = [
-    "cmake-3+"
+    "cmake-3",
 ]
 
 variants = [
-    ["platform-linux"]
+    [
+        "platform-linux",
+    ],
 ]
 
 build_system = "cmake"
 
+
 with scope("config") as config:
     config.build_thread_count = "logical_cores"
 
-uuid = "tbb-{version}".format(version=str(version))
 
 def commands():
-    env.LIBRARY_PATH.prepend("{root}/lib/intel64/gcc4.7")
-    env.LD_LIBRARY_PATH.prepend("{root}/lib/intel64/gcc4.7")
-    env.MIC_LIBRARY_PATH.prepend("{root}/lib/intel64/gcc4.7")
-    env.MIC_LD_LIBRARY_PATH.prepend("{root}/lib/intel64/gcc4.7")
-    env.CPATH.prepend("{root}/include")
-    env.TBBROOT.set("{root}")
+    env.LIBRARY_PATH.prepend("{root}/tbb/lib/intel64/gcc4.8")
+    env.LD_LIBRARY_PATH.prepend("{root}/tbb/lib/intel64/gcc4.8")
+    env.MIC_LIBRARY_PATH.prepend("{root}/tbb/lib/intel64/gcc4.8")
+    env.MIC_LD_LIBRARY_PATH.prepend("{root}/tbb/lib/intel64/gcc4.8")
+    env.CPATH.prepend("{root}/tbb/include")
+    env.CMAKE_MODULE_PATH.prepend("{root}/tbb/cmake")
+    env.TBBROOT.set("{root}/tbb")
     env.TBB_TARGET_ARCH.set("intel64")
     env.TBB_TARGET_PLATFORM.set("linux")
 
     # Helper environment variables.
-    env.TBB_BINARY_PATH.set("{root}/bin")
-    env.TBB_INCLUDE_PATH.set("{root}/include")
-    env.TBB_LIBRARY_PATH.set("{root}/lib/" + str(env.TBB_TARGET_ARCH) + "/gcc4.7")
+    env.TBB_BINARY_PATH.set("{root}/tbb/bin")
+    env.TBB_INCLUDE_PATH.set("{root}/tbb/include")
+    env.TBB_LIBRARY_PATH.set(f"{{root}}/tbb/lib/{env.TBB_TARGET_ARCH}/gcc4.8")

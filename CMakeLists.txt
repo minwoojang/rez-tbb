@@ -4,18 +4,10 @@ include(RezBuild)
 include(RezRepository)
 include(ExternalProject)
 
-# We split the TBB version string in multiple ones.
-string(REPLACE "." ";" TBB_VERSION_LIST ${REZ_BUILD_PROJECT_VERSION})
-list(GET TBB_VERSION_LIST 0 TBB_VERSION_MAJOR)
-list(GET TBB_VERSION_LIST 1 TBB_VERSION_MINOR)
-
-# We create a version of PySide2 to make it match with the one in the archive name.
-set(TBB_ARCHIVE_VERSION "${TBB_VERSION_MAJOR}_${TBB_VERSION_MINOR}")
-
 # TBB
 rez_set_archive(
-    TBB_URL tbb/tbb${TBB_VERSION_MAJOR}_${TBB_VERSION_MAJOR}0412oss_lin.tgz
-    https://github.com/intel/tbb/releases/download/2017_U6/tbb2017_20170412oss_lin.tgz
+    TBB_URL tbb/tbb-${REZ_BUILD_PROJECT_VERSION}-lin.tgz
+    https://github.com/oneapi-src/oneTBB/releases/download/v${REZ_BUILD_PROJECT_VERSION}/tbb-${REZ_BUILD_PROJECT_VERSION}-lin.tgz
 )
 
 # The environment variable REZ_TMP_PATH is meant to point to a location such as "/tmp/rez".
