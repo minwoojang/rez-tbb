@@ -4,6 +4,8 @@ include(RezBuild)
 include(RezRepository)
 include(ExternalProject)
 
+
+
 # TBB
 rez_set_archive(
     TBB_URL tbb/tbb-${REZ_BUILD_PROJECT_VERSION}-lin.tgz
@@ -11,7 +13,14 @@ rez_set_archive(
 )
 
 # The environment variable REZ_TMP_PATH is meant to point to a location such as "/tmp/rez".
+# export REZ_TMP_PATH=/source/user/td/jmw/rez-tmp example
 set(EXTRACT_DIR $ENV{REZ_TMP_PATH}/tbb/${REZ_BUILD_PROJECT_VERSION})
+# set(EXTRACT_DIR /source/user/td/jmw/rez-tbb)#/${REZ_BUILD_PROJECT_VERSION})
+
+message(STATUS "-----------------------------")
+message(STATUS $ENV{REZ_TMP_PATH})
+message(STATUS ${EXTRACT_DIR})
+message(STATUS "-----------------------------")
 
 # We configure/build/install TBB through the ExternalProject_Add macro,
 # using three different shell scripts for each of these steps.
@@ -37,3 +46,4 @@ install(
         COMMAND echo \"\n[CMAKE] TBB-${REZ_BUILD_PROJECT_VERSION} PACKAGE SETUP FINISHED!\n\"
     )"
 )
+
